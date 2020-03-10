@@ -8,7 +8,7 @@ async function createPersonTable() {
       person_id INTEGER,
       first_name TEXT,
       last_name TEXT,
-      phone_number INTEGER, 
+      phone_number TEXT, 
       email_address TEXT, 
       job_title TEXT,
       company_id INTEGER,

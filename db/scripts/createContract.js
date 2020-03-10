@@ -6,8 +6,8 @@ async function createContractTable() {
     CREATE TABLE IF NOT EXISTS contract (
       id SERIAL,
       contract_id INTEGER,
-      start_date DATE,
-      end_date DATE,
+      start_date TEXT,
+      end_date TEXT,
       number_of_learners INTEGER, 
       skill_level TEXT, 
       summary TEXT,

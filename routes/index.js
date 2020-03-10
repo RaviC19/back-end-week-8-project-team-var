@@ -51,6 +51,18 @@ router.post("/person", (req, res) => {
   res.send(`You have saved a new person`);
 });
 
+router.delete("/person/:id", async (req, res) => {
+  const { id } = req.params;
+  const name = await deletePerson(id);
+  if (name) {
+    res
+      .status(200)
+      .send(`You have deleted the person ${name} with the id of ${id}`);
+  } else {
+    res.status(406).send(`There are no persons with that id to delete`);
+  }
+});
+
 router.get("/contract", async (req, res) => {
   const contract = await getContract();
   res.json(contract);
@@ -60,6 +72,18 @@ router.post("/contract", (req, res) => {
   const { body } = req;
   saveContract(body);
   res.send(`You have saved a new contract`);
+});
+
+router.delete("/contract/:id", async (req, res) => {
+  const { id } = req.params;
+  const name = await deleteContract(id);
+  if (name) {
+    res
+      .status(200)
+      .send(`You have deleted the person ${name} with the id of ${id}`);
+  } else {
+    res.status(406).send(`There are no persons with that id to delete`);
+  }
 });
 
 module.exports = router;

@@ -42,6 +42,7 @@ async function savePerson(person) {
     job_title,
     company_id
   } = person;
+  console.log(person);
   const newPerson = await query(
     `INSERT INTO person (
               person_id,
@@ -125,22 +126,22 @@ async function deleteProvider(id) {
 }
 async function deletePerson(id) {
   const res = await query(
-    `DELETE from person WHERE id=$1 RETURNING provider_name`,
+    `DELETE from person WHERE id=$1 RETURNING first_name`,
     [id]
   );
   if (res.rowCount) {
-    return res.rows[0].provider_name;
+    return res.rows[0].first_name;
   } else {
     return undefined;
   }
 }
 async function deleteContract(id) {
   const res = await query(
-    `DELETE from contract WHERE id=$1 RETURNING provider_name`,
+    `DELETE from contract WHERE id=$1 RETURNING contract_id`,
     [id]
   );
   if (res.rowCount) {
-    return res.rows[0].provider_name;
+    return res.rows[0].contract_id;
   } else {
     return undefined;
   }
