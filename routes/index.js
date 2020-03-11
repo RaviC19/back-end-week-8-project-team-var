@@ -9,7 +9,10 @@ const {
   getContract,
   deleteProvider,
   deletePerson,
-  deleteContract
+  deleteContract,
+  updateProvider,
+  updatePerson,
+  updateContract
 } = require("../models/contracts.js");
 
 /* GET home page. */
@@ -40,6 +43,16 @@ router.delete("/provider/:id", async (req, res) => {
   }
 });
 
+router.patch("/provider/:id", async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  await updateProvider(body, id);
+  res.send({
+    success: true,
+    message: `Provider with id ${id} has been updated`
+  });
+});
+
 router.get("/person", async (req, res) => {
   const person = await getPerson();
   res.json(person);
@@ -63,6 +76,16 @@ router.delete("/person/:id", async (req, res) => {
   }
 });
 
+router.patch("/person/:id", async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  await updatePerson(body, id);
+  res.send({
+    success: true,
+    message: `Person with id ${id} has been updated`
+  });
+});
+
 router.get("/contract", async (req, res) => {
   const contract = await getContract();
   res.json(contract);
@@ -80,10 +103,20 @@ router.delete("/contract/:id", async (req, res) => {
   if (name) {
     res
       .status(200)
-      .send(`You have deleted the person ${name} with the id of ${id}`);
+      .send(`You have deleted the contract ${name} with the id of ${id}`);
   } else {
-    res.status(406).send(`There are no persons with that id to delete`);
+    res.status(406).send(`There are no contracts with that id to delete`);
   }
+});
+
+router.patch("/contract/:id", async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  await updateContract(body, id);
+  res.send({
+    success: true,
+    message: `Contract with id ${id} has been updated`
+  });
 });
 
 module.exports = router;

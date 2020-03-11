@@ -147,6 +147,86 @@ async function deleteContract(id) {
   }
 }
 
+async function updateProvider(body, id) {
+  const {
+    provider_id,
+    provider_name,
+    UKPRN,
+    sort_code,
+    account_number,
+    main_contact,
+    contracts
+  } = body;
+  const res = await query(
+    `UPDATE provider SET provider_id = COALESCE($1, provider_id), provider_name = COALESCE($2, provider_name), UKPRN = COALESCE($3, UKPRN), sort_code = COALESCE($4, sort_code), account_number = COALESCE($5, account_number), main_contact = COALESCE($6, main_contact), contracts = COALESCE($7, contracts) WHERE id = $8 RETURNING provider_name`,
+    [
+      provider_id,
+      provider_name,
+      UKPRN,
+      sort_code,
+      account_number,
+      main_contact,
+      contracts,
+      id
+    ]
+  );
+  return res;
+}
+
+async function updatePerson(body, id) {
+  const {
+    person_id,
+    first_name,
+    last_name,
+    phone_number,
+    email_address,
+    job_title,
+    company_id
+  } = body;
+  const res = await query(
+    `UPDATE person SET person_id = COALESCE($1, person_id), first_name = COALESCE($2, first_name), last_name = COALESCE($3, last_name), phone_number = COALESCE($4, phone_number), email_address = COALESCE($5, email_address), job_title = COALESCE($6, job_title), company_id = COALESCE($7, company_id) WHERE id = $8 RETURNING first_name`,
+    [
+      person_id,
+      first_name,
+      last_name,
+      phone_number,
+      email_address,
+      job_title,
+      company_id,
+      id
+    ]
+  );
+  return res;
+}
+
+async function updateContract(body, id) {
+  const {
+    contract_id,
+    start_date,
+    end_date,
+    number_of_learners,
+    skill_level,
+    summary,
+    complete,
+    budget
+  } = body;
+  const res = await query(
+    `UPDATE contract SET contract_id = COALESCE($1, contract_id), start_date = COALESCE($2, start_date), end_date = COALESCE($3, end_date), number_of_learners = COALESCE($4, number_of_learners), skill_level = COALESCE($5, skill_level), summary = COALESCE($6, summary), complete = COALESCE($7, complete), budget = COALESCE($8, budget) WHERE id = $9 RETURNING contract_id`,
+    [
+      contract_id,
+      start_date,
+      end_date,
+      number_of_learners,
+      skill_level,
+      summary,
+      complete,
+      budget,
+      id
+    ]
+  );
+  return res;
+}
+
 module.exports = {
   saveProvider,
   savePerson,
@@ -156,5 +236,8 @@ module.exports = {
   getContract,
   deleteProvider,
   deletePerson,
-  deleteContract
+  deleteContract,
+  updateProvider,
+  updatePerson,
+  updateContract
 };
