@@ -1,4 +1,5 @@
 const { query } = require("../db/index.js");
+const bcrypt = require("bcryptjs");
 
 async function saveProvider(provider) {
   const {
@@ -98,6 +99,26 @@ async function saveContract(contract) {
     ]
   );
   return newContract;
+}
+
+async function saveUser(user) {
+  const { username, email, password } = user;
+  const hash = await bcrypt.hash(password, 10);
+  const newUser = await query(
+    `INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING username`,
+    [username, email, hash]
+  );
+  return newUser.rowCount > 0 ? newUser.rows[0].username : null;
+}
+
+async function logInUser() {
+  const { username, password } = user;
+  const login = await query(`SELECT password FROM users WHERE username=$1`, [
+    username
+  ]);
+  const hash = res.rows[0].password;
+  const success = await bcrypt.compare(password, hash);
+  return success;
 }
 
 async function getProvider() {
@@ -256,6 +277,8 @@ module.exports = {
   saveProvider,
   savePerson,
   saveContract,
+  saveUser,
+  logInUser,
   getProvider,
   getPerson,
   getContract,
