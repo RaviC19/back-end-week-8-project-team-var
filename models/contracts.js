@@ -104,13 +104,38 @@ async function getProvider() {
   const data = await query(`SELECT * FROM provider`);
   return data.rows;
 }
+
+async function getProviderByName(name) {
+  const provider = await query(
+    `SELECT * FROM provider WHERE provider_name ILIKE '%' || $1 || '%'`,
+    [name]
+  );
+  return provider.rows;
+}
+
 async function getPerson() {
   const data = await query(`SELECT * FROM person`);
   return data.rows;
 }
+
+async function getPersonByFirstName(firstName) {
+  const person = await query(
+    `SELECT * FROM person WHERE first_name ILIKE '%' || $1 || '%'`,
+    [firstName]
+  );
+  return person.rows;
+}
+
 async function getContract() {
   const data = await query(`SELECT * FROM contract`);
   return data.rows;
+}
+
+async function getContractById(id) {
+  const contracts = await query(`SELECT * FROM contract WHERE contract_id=$1`, [
+    id
+  ]);
+  return contracts.rows;
 }
 
 async function deleteProvider(id) {
@@ -239,5 +264,8 @@ module.exports = {
   deleteContract,
   updateProvider,
   updatePerson,
-  updateContract
+  updateContract,
+  getProviderByName,
+  getPersonByFirstName,
+  getContractById
 };

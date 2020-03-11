@@ -5,7 +5,7 @@ async function createContractTable() {
     const res = await query(`
     CREATE TABLE IF NOT EXISTS contract (
       id SERIAL,
-      contract_id INTEGER,
+      contract_id INTEGER NOT NULL UNIQUE,
       start_date TEXT,
       end_date TEXT,
       number_of_learners INTEGER, 

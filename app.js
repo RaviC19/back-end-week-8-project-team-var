@@ -18,6 +18,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", indexRouter);
+// app.use("/contracts", indexRouter);
+// app.use("/providers", indexRouter);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

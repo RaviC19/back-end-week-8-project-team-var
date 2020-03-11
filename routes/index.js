@@ -12,7 +12,10 @@ const {
   deleteContract,
   updateProvider,
   updatePerson,
-  updateContract
+  updateContract,
+  getProviderByName,
+  getPersonByFirstName,
+  getContractById
 } = require("../models/contracts.js");
 
 /* GET home page. */
@@ -21,6 +24,12 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/provider", async (req, res) => {
+  const { name } = req.query;
+  if (name) {
+    const providerName = await getProviderByName(name);
+    res.json(providerName);
+    return;
+  }
   const provider = await getProvider();
   res.json(provider);
 });
@@ -54,6 +63,12 @@ router.patch("/provider/:id", async (req, res) => {
 });
 
 router.get("/person", async (req, res) => {
+  const { first } = req.query;
+  if (first) {
+    const firstName = await getPersonByFirstName(first);
+    res.json(firstName);
+    return;
+  }
   const person = await getPerson();
   res.json(person);
 });
@@ -87,6 +102,12 @@ router.patch("/person/:id", async (req, res) => {
 });
 
 router.get("/contract", async (req, res) => {
+  const { id } = req.query;
+  if (id) {
+    const contractId = await getContractById(id);
+    res.json(contractId);
+    return;
+  }
   const contract = await getContract();
   res.json(contract);
 });
