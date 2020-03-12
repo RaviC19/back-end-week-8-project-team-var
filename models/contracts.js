@@ -68,6 +68,7 @@ async function savePerson(person) {
 
 async function saveContract(contract) {
   const {
+    provider_name,
     contract_id,
     start_date,
     end_date,
@@ -78,7 +79,7 @@ async function saveContract(contract) {
     budget
   } = contract;
   const newContract = await query(
-    `INSERT INTO contract (
+    `INSERT INTO contract (provider_name,
               contract_id,
               start_date,
               end_date,
@@ -86,8 +87,9 @@ async function saveContract(contract) {
               skill_level,
               summary,
               complete,
-              budget) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+              budget) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
     [
+      provider_name,
       contract_id,
       start_date,
       end_date,
@@ -249,6 +251,7 @@ async function updatePerson(body, id) {
 
 async function updateContract(body, id) {
   const {
+    provider_name,
     contract_id,
     start_date,
     end_date,
@@ -259,8 +262,9 @@ async function updateContract(body, id) {
     budget
   } = body;
   const res = await query(
-    `UPDATE contract SET contract_id = COALESCE($1, contract_id), start_date = COALESCE($2, start_date), end_date = COALESCE($3, end_date), number_of_learners = COALESCE($4, number_of_learners), skill_level = COALESCE($5, skill_level), summary = COALESCE($6, summary), complete = COALESCE($7, complete), budget = COALESCE($8, budget) WHERE id = $9 RETURNING contract_id`,
+    `UPDATE contract SET provider_name = COALESCE($1, provider_name) contract_id = COALESCE($2, contract_id), start_date = COALESCE($3, start_date), end_date = COALESCE($4, end_date), number_of_learners = COALESCE($5, number_of_learners), skill_level = COALESCE($6, skill_level), summary = COALESCE($7, summary), complete = COALESCE($8, complete), budget = COALESCE($9, budget) WHERE id = $10 RETURNING provider_name`,
     [
+      provider_name,
       contract_id,
       start_date,
       end_date,
