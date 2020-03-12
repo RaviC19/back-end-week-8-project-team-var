@@ -4,8 +4,6 @@ const {
   saveProvider,
   savePerson,
   saveContract,
-  saveUser,
-  logInUser,
   getProvider,
   getPerson,
   getContract,
