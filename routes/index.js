@@ -4,6 +4,8 @@ const {
   saveProvider,
   savePerson,
   saveContract,
+  saveUser,
+  logInUser,
   getProvider,
   getPerson,
   getContract,
@@ -18,10 +20,9 @@ const {
   getContractById
 } = require("../models/contracts.js");
 
-/* GET home page. */
-router.get("/", function(req, res, next) {
-  res.json({ message: "AEB Homepage" });
-});
+const { authenticate } = require("../middleware/authenticate");
+
+// router.use(authenticate);
 
 router.get("/provider", async (req, res) => {
   const { name } = req.query;

@@ -10,7 +10,7 @@ module.exports = session({
   store: new pgSession({
     pool // Connection pool
   }),
-  secret: process.env.COOKIE,
+  secret: process.env.COOKIE || "test",
   resave: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 });

@@ -111,11 +111,13 @@ async function saveUser(user) {
   return newUser.rowCount > 0 ? newUser.rows[0].username : null;
 }
 
-async function logInUser() {
+async function logInUser(user) {
   const { username, password } = user;
-  const login = await query(`SELECT password FROM users WHERE username=$1`, [
+  console.log({ user });
+  const res = await query(`SELECT password FROM users WHERE username=$1`, [
     username
   ]);
+  console.log(res.rows);
   const hash = res.rows[0].password;
   const success = await bcrypt.compare(password, hash);
   return success;
