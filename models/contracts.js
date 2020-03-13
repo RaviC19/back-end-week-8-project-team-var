@@ -187,7 +187,7 @@ async function deletePerson(id) {
 }
 async function deleteContract(id) {
   const res = await query(
-    `DELETE from contract WHERE id=$1 RETURNING contract_id`,
+    `DELETE from contract WHERE contract_id=$1 RETURNING contract_id`,
     [id]
   );
   if (res.rowCount) {
