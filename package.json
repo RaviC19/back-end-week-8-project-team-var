@@ -3,12 +3,28 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node -r dotenv/config app.js",
+    "dev": "nodemon -r dotenv/config app.js",
+    "db:createProviderTable": "node -r dotenv/config ./db/scripts/createProvider.js",
+    "db:createPersonTable": "node -r dotenv/config ./db/scripts/createPerson.js",
+    "db:createContractTable": "node -r dotenv/config ./db/scripts/createContract.js",
+    "db:createUserTable": "node -r dotenv/config ./db/scripts/createUser.js",
+    "db:dropProvider": "node -r dotenv/config ./db/scripts/dropProvider.js",
+    "db:dropPerson": "node -r dotenv/config ./db/scripts/dropPerson.js",
+    "db:dropContract": "node -r dotenv/config ./db/scripts/dropContract.js",
+    "db:dropUserTable": "node -r dotenv/config ./db/scripts/dropUser.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^6.1.0",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "express": "~4.16.0",
-    "morgan": "~1.9.0"
+    "express-session": "^1.17.0",
+    "morgan": "~1.9.0",
+    "nodemon": "^2.0.2",
+    "pg": "^7.18.2"
   }
 }
